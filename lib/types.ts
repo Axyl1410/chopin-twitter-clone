@@ -8,4 +8,4 @@ export interface Tweet {
 export interface User {
   id: string;
   username: string;
-} 
+}

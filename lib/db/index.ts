@@ -1,7 +1,11 @@
-import { sql } from '@vercel/postgres';
-import { Tweet, User } from '../types';
+import { sql } from "@vercel/postgres";
+import { Tweet, User } from "../types";
+import { Oracle } from "@chopinframework/next";
 
-export async function getTweets(limit: number, cursor?: number): Promise<{ tweets: Tweet[], nextCursor: number | null }> {
+export async function getTweets(
+  limit: number,
+  cursor?: number
+): Promise<{ tweets: Tweet[]; nextCursor: number | null }> {
   const { rows } = cursor
     ? await sql`
         SELECT t.*
@@ -18,23 +22,27 @@ export async function getTweets(limit: number, cursor?: number): Promise<{ tweet
       `;
 
   const hasMore = rows.length === limit + 1;
-  const tweets = rows.slice(0, limit).map(row => ({
+  const tweets = rows.slice(0, limit).map((row) => ({
     id: row.id,
     content: row.content,
     userId: row.user_id,
-    timestamp: row.created_at
+    timestamp: row.created_at,
   }));
 
   return {
     tweets,
-    nextCursor: hasMore ? tweets[tweets.length - 1].id : null
+    nextCursor: hasMore ? tweets[tweets.length - 1].id : null,
   };
 }
 
-export async function createTweet(content: string, userId: string): Promise<Tweet> {
+export async function createTweet(
+  content: string,
+  userId: string
+): Promise<Tweet> {
+  const now = await Oracle.now();
   const { rows } = await sql`
-    INSERT INTO tweets (content, user_id)
-    VALUES (${content}, ${userId})
+    INSERT INTO tweets (content, user_id, created_at)
+    VALUES (${content}, ${userId}, ${new Date(now).toISOString()})
     RETURNING *
   `;
   const tweet = rows[0];
@@ -42,7 +50,7 @@ export async function createTweet(content: string, userId: string): Promise<Twee
     id: tweet.id,
     content: tweet.content,
     userId: tweet.user_id,
-    timestamp: tweet.created_at
+    timestamp: tweet.created_at,
   };
 }
 
@@ -50,13 +58,18 @@ export async function getUser(userId: string): Promise<User | null> {
   const { rows } = await sql`
     SELECT * FROM users WHERE id = ${userId}
   `;
-  return rows[0] ? {
-    id: rows[0].id,
-    username: rows[0].username
-  } : null;
+  return rows[0]
+    ? {
+        id: rows[0].id,
+        username: rows[0].username,
+      }
+    : null;
 }
 
-export async function createUser(userId: string, username: string): Promise<User> {
+export async function createUser(
+  userId: string,
+  username: string
+): Promise<User> {
   const { rows } = await sql`
     INSERT INTO users (id, username)
     VALUES (${userId}, ${username})
@@ -64,11 +77,14 @@ export async function createUser(userId: string, username: string): Promise<User
   `;
   return {
     id: rows[0].id,
-    username: rows[0].username
+    username: rows[0].username,
   };
 }
 
-export async function updateUsername(userId: string, username: string): Promise<User> {
+export async function updateUsername(
+  userId: string,
+  username: string
+): Promise<User> {
   const { rows } = await sql`
     UPDATE users
     SET username = ${username}
@@ -77,6 +93,6 @@ export async function updateUsername(userId: string, username: string): Promise<
   `;
   return {
     id: rows[0].id,
-    username: rows[0].username
+    username: rows[0].username,
   };
-} 
+}

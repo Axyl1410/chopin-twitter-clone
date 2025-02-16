@@ -1,37 +1,37 @@
-import { useUsername } from "@/hooks/useTweets"
-import { useState, useEffect } from "react"
+import { useUsername } from "@/hooks/useTweets";
+import { useEffect, useState } from "react";
 
 interface UserProfileProps {
-  userId: string
-  onUsernameChange: (username: string) => void
+  userId: string;
+  onUsernameChange: (username: string) => void;
 }
 
 export function UserProfile({ userId, onUsernameChange }: UserProfileProps) {
-  const { data: user, isLoading } = useUsername(userId)
-  const [inputValue, setInputValue] = useState("")
+  const { data: user, isLoading } = useUsername(userId);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     if (user?.username && !isLoading) {
-      setInputValue(user.username)
+      setInputValue(user.username);
     }
-  }, [user?.username, isLoading])
+  }, [user?.username, isLoading]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-  }
+    setInputValue(e.target.value);
+  };
 
   const handleSubmit = () => {
     if (inputValue.trim() && inputValue !== user?.username) {
-      onUsernameChange(inputValue.trim())
+      onUsernameChange(inputValue.trim());
     }
-  }
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      e.currentTarget.blur()
+    if (e.key === "Enter") {
+      e.preventDefault();
+      e.currentTarget.blur();
     }
-  }
+  };
 
   return (
     <div className="mb-4 p-4 border rounded">
@@ -53,6 +53,5 @@ export function UserProfile({ userId, onUsernameChange }: UserProfileProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

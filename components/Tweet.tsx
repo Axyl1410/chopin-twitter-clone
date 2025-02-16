@@ -1,16 +1,21 @@
-import { formatDistanceToNow } from "date-fns"
-import { useUsername } from "@/hooks/useTweets"
+import { useUsername } from "@/hooks/useTweets";
+import { formatDistanceToNow } from "date-fns";
 
 interface TweetProps {
-  content: string
-  userId: string
-  timestamp: Date
-  onUsernameClick: (userId: string) => void
+  content: string;
+  userId: string;
+  timestamp: Date;
+  onUsernameClick: (userId: string) => void;
 }
 
-export function Tweet({ content, userId, timestamp, onUsernameClick }: TweetProps) {
-  const { data: user, isLoading } = useUsername(userId)
-  const username = isLoading ? "Loading..." : user?.username || "Unknown"
+export function Tweet({
+  content,
+  userId,
+  timestamp,
+  onUsernameClick,
+}: TweetProps) {
+  const { data: user, isLoading } = useUsername(userId);
+  const username = isLoading ? "Loading..." : user?.username || "Unknown";
 
   return (
     <div className="border-b p-4">
@@ -27,6 +32,5 @@ export function Tweet({ content, userId, timestamp, onUsernameClick }: TweetProp
       </div>
       <p className="whitespace-pre-wrap">{content}</p>
     </div>
-  )
+  );
 }
-

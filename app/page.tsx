@@ -1,5 +1,5 @@
-import { Suspense } from "react"
-import TweetsPage from "./tweets"
+import { Suspense } from "react";
+import TweetsPage from "./tweets";
 
 export default function Home() {
   return (
@@ -9,6 +9,5 @@ export default function Home() {
         <TweetsPage />
       </Suspense>
     </div>
-  )
+  );
 }
-

@@ -1,6 +1,11 @@
-import { sql } from '@vercel/postgres'
-import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query'
-import { TweetFeed } from '@/components/TweetFeed'
+import { sql } from "@vercel/postgres";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
+import { TweetFeed } from "@/components/TweetFeed";
+import { getAddress } from "@/lib/chopin-server";
 
 async function getInitialTweets() {
   const { rows } = await sql`
@@ -8,32 +13,33 @@ async function getInitialTweets() {
     FROM tweets t
     ORDER BY t.created_at DESC
     LIMIT ${10}
-  `
+  `;
 
   return {
-    tweets: rows.map(row => ({
+    tweets: rows.map((row) => ({
       id: row.id,
       content: row.content,
       userId: row.user_id,
-      timestamp: row.created_at
+      timestamp: row.created_at,
     })),
-    nextCursor: rows.length === 10 ? rows[rows.length - 1].id : null
-  }
+    nextCursor: rows.length === 10 ? rows[rows.length - 1].id : null,
+  };
 }
 
 export default async function TweetsPage() {
-  const queryClient = new QueryClient()
-  const initialData = await getInitialTweets()
-  
+  const queryClient = new QueryClient();
+  const initialData = await getInitialTweets();
+  const address = await getAddress();
+
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ['tweets'],
+    queryKey: ["tweets"],
     queryFn: () => initialData,
-    initialPageParam: 0
-  })
+    initialPageParam: 0,
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <TweetFeed />
+      <TweetFeed initialAddress={address} />
     </HydrationBoundary>
-  )
-} 
+  );
+}

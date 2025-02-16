@@ -1,5 +1,5 @@
-import { sql } from '@vercel/postgres';
-import { NextResponse } from 'next/server';
+import { sql } from "@vercel/postgres";
+import { NextResponse } from "next/server";
 
 export async function POST() {
   try {
@@ -21,10 +21,13 @@ export async function POST() {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
     `;
-    
-    return NextResponse.json({ message: 'Database initialized successfully' });
+
+    return NextResponse.json({ message: "Database initialized successfully" });
   } catch (error) {
-    console.error('Error initializing database:', error);
-    return NextResponse.json({ error: 'Failed to initialize database' }, { status: 500 });
+    console.error("Error initializing database:", error);
+    return NextResponse.json(
+      { error: "Failed to initialize database" },
+      { status: 500 }
+    );
   }
-} 
+}
