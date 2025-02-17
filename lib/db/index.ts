@@ -1,6 +1,6 @@
+import { Oracle } from "@chopinframework/next";
 import { sql } from "@vercel/postgres";
 import { Tweet, User } from "../types";
-import { Oracle } from "@chopinframework/next";
 
 export async function getTweets(
   limit: number,
