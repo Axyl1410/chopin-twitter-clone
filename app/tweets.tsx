@@ -4,7 +4,7 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { TweetFeed } from "@/components/tweet/TweetFeed";
+import { TweetFeed } from "@/components/tweet/tweet-feed";
 import { getAddress } from "@/lib/chopin-server";
 
 async function getInitialTweets() {

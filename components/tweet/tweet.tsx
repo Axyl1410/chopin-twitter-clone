@@ -1,4 +1,4 @@
-import { useUsername } from "@/hooks/useTweets";
+import { useUsername } from "@/hooks/use-tweets";
 import { formatDistanceToNow } from "date-fns";
 
 interface TweetProps {

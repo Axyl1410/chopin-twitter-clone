@@ -7,9 +7,9 @@ import {
   useUsername,
   useInitialUser,
   useAddress,
-} from "@/hooks/useTweets";
-import { Tweet } from "./Tweet";
-import { UserProfile } from "./UserProfile";
+} from "@/hooks/use-tweets";
+import { Tweet } from "./tweet";
+import { UserProfile } from "./user-profile";
 
 interface TweetFeedProps {
   initialAddress: string | null;
