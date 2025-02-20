@@ -19,14 +19,14 @@ export function Tweet({
 
   return (
     <div className="border-b p-4">
-      <div className="flex items-center mb-2">
+      <div className="mb-2 flex items-center">
         <button
           onClick={() => onUsernameClick(userId)}
           className="font-bold hover:underline"
         >
           {username}
         </button>
-        <span className="text-gray-500 text-sm ml-2">
+        <span className="ml-2 text-sm text-gray-500">
           {formatDistanceToNow(new Date(timestamp), { addSuffix: true })}
         </span>
       </div>

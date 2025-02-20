@@ -20,7 +20,7 @@ export function useAddress(initialAddress: string | null) {
 
 async function fetchTweets({ pageParam = 0 }) {
   const response = await fetch(
-    `/api/tweets?cursor=${pageParam}&limit=${TWEETS_PER_PAGE}`
+    `/api/tweets?cursor=${pageParam}&limit=${TWEETS_PER_PAGE}`,
   );
   if (!response.ok) throw new Error("Failed to fetch tweets");
   return response.json();

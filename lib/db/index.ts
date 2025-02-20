@@ -4,7 +4,7 @@ import { Tweet, User } from "../types";
 
 export async function getTweets(
   limit: number,
-  cursor?: number
+  cursor?: number,
 ): Promise<{ tweets: Tweet[]; nextCursor: number | null }> {
   const { rows } = cursor
     ? await sql`
@@ -37,7 +37,7 @@ export async function getTweets(
 
 export async function createTweet(
   content: string,
-  userId: string
+  userId: string,
 ): Promise<Tweet> {
   const now = await Oracle.now();
   const { rows } = await sql`
@@ -68,7 +68,7 @@ export async function getUser(userId: string): Promise<User | null> {
 
 export async function createUser(
   userId: string,
-  username: string
+  username: string,
 ): Promise<User> {
   const { rows } = await sql`
     INSERT INTO users (id, username)
@@ -83,7 +83,7 @@ export async function createUser(
 
 export async function updateUsername(
   userId: string,
-  username: string
+  username: string,
 ): Promise<User> {
   const { rows } = await sql`
     UPDATE users
