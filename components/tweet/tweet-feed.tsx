@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import {
+  useAddress,
+  useInitialUser,
   useTweets,
   useUsername,
-  useInitialUser,
-  useAddress,
 } from "@/hooks/use-tweets";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useState } from "react";
 import { Tweet } from "./tweet";
 import { UserProfile } from "./user-profile";
 
@@ -46,12 +46,12 @@ export function TweetFeed({ initialAddress }: TweetFeedProps) {
             fetchNextPage();
           }
         },
-        { threshold: 1.0 }
+        { threshold: 1.0 },
       );
       observer.observe(node);
       return () => observer.disconnect();
     },
-    [hasNextPage, isFetchingNextPage, fetchNextPage]
+    [hasNextPage, isFetchingNextPage, fetchNextPage],
   );
 
   const handleUsernameChange = (newUsername: string) => {
@@ -100,12 +100,12 @@ export function TweetFeed({ initialAddress }: TweetFeedProps) {
           value={newTweet}
           onChange={(e) => setNewTweet(e.target.value)}
           placeholder="What's happening?"
-          className="w-full border rounded p-2 mb-2"
+          className="mb-2 w-full rounded border p-2"
           rows={3}
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="rounded bg-blue-500 px-4 py-2 text-white"
         >
           Tweet
         </button>
@@ -118,7 +118,7 @@ export function TweetFeed({ initialAddress }: TweetFeedProps) {
           </p>
           <button
             onClick={clearFilter}
-            className="bg-gray-200 text-gray-800 px-2 py-1 rounded text-sm"
+            className="rounded bg-gray-200 px-2 py-1 text-sm text-gray-800"
           >
             Clear filter
           </button>
@@ -136,7 +136,7 @@ export function TweetFeed({ initialAddress }: TweetFeedProps) {
         ))}
         <div ref={intersectionObserver} className="h-4" />
         {isFetchingNextPage && (
-          <div className="text-center py-4 text-gray-500">
+          <div className="py-4 text-center text-gray-500">
             Loading more tweets...
           </div>
         )}

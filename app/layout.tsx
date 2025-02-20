@@ -1,7 +1,10 @@
+import { AppSidebar } from "@/components/layout/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +22,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Toaster />
-          {children}
+          <TooltipProvider>
+            <SidebarProvider>
+              <AppSidebar />
+              <main>
+                <SidebarTrigger />
+                <Toaster />
+                {children}
+              </main>
+            </SidebarProvider>
+          </TooltipProvider>
         </Providers>
       </body>
     </html>

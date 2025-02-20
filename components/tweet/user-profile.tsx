@@ -34,11 +34,11 @@ export function UserProfile({ userId, onUsernameChange }: UserProfileProps) {
   };
 
   return (
-    <div className="mb-4 p-4 border rounded">
+    <div className="mb-4 rounded border p-4">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="font-bold">Profile</h2>
-          <p className="text-sm text-gray-500 font-mono">{userId}</p>
+          <p className="font-mono text-sm text-gray-500">{userId}</p>
         </div>
         <div className="flex items-center">
           <input
@@ -47,7 +47,7 @@ export function UserProfile({ userId, onUsernameChange }: UserProfileProps) {
             onChange={handleChange}
             onBlur={handleSubmit}
             onKeyDown={handleKeyDown}
-            className="border rounded px-2 py-1 mr-2"
+            className="mr-2 rounded border px-2 py-1"
             placeholder="Username"
           />
         </div>
